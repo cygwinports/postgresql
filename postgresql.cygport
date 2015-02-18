@@ -1,13 +1,12 @@
 # -*- sh -*-
 NAME="postgresql"
-VERSION=9.3.5
-RELEASE=2
+VERSION=9.3.6
+RELEASE=1
 CATEGORY="Database"
 SUMMARY="object-relational SQL database management system"
 DESCRIPTION="object-relational SQL database management system"
 HOMEPAGE="http://www.postgresql.org/"
-SRC_URI="http://wwwmaster.postgresql.org/redir/7/h/source/v${PV}/${PN}-${PV}.tar.bz2"
-#SRC_URI="ftp://ftp.de.postgresql.org/mirror/postgresql/source/v${PV}/${PN}-${PV}.tar.bz2"
+SRC_URI="ftp://ftp.postgresql.org/pub/source/v${VERSION}/postgresql-${VERSION}.tar.bz2"
 
 PATCH_URI="
 postgresql-cygwin.patch
@@ -22,14 +21,14 @@ RESTRICT="debuginfo"
 
 MAKEOPTS="${MAKEOPTS} -j1"
 PACKAGE_BUGREPORT="cygwin@cygwin.com"
-CYGCONF_ARGS="LDFLAGS=-Wl,-no-undefined --enable-nls --with-openssl --with-perl --with-python --with-ldap"
+CYGCONF_ARGS="LDFLAGS=-Wl,-no-undefined --enable-nls --with-openssl --with-perl --with-python --with-ldap --with-system-tzdata=/usr/share/zoneinfo"
 
 PKG_NAMES="${PN} ${PN}-devel ${PN}-client ${PN}-contrib ${PN}-doc \
   ${PN}-plperl ${PN}-plpython \
   libpq5 libpq-devel libpgtypes3 libecpg6 libecpg-compat3 libecpg-devel"
 
 postgresql_SUMMARY="PostgreSQL Data Base Management System"
-postgresql_REQUIRES="postgresql-client crypt openssl" 
+postgresql_REQUIRES="postgresql-client crypt openssl tzcode"
 postgresql_devel_SUMMARY="development files for PostgreSQL server-side programming"
 postgresql_devel_CATEGORY="Devel Database"
 postgresql_client_SUMMARY="front-end programs for PostgreSQL"
