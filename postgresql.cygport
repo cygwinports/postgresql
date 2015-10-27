@@ -1,20 +1,17 @@
-# -*- sh -*-
 NAME="postgresql"
-VERSION=9.3.6
+VERSION=9.4.5
 RELEASE=1
+
 CATEGORY="Database"
 SUMMARY="object-relational SQL database management system"
 DESCRIPTION="object-relational SQL database management system"
 HOMEPAGE="http://www.postgresql.org/"
 SRC_URI="ftp://ftp.postgresql.org/pub/source/v${VERSION}/postgresql-${VERSION}.tar.bz2"
+#SRC_URI="ftp://ftp.de.postgresql.org/mirror/postgresql/source/v${PV}/${PN}-${PV}.tar.bz2"
 
 PATCH_URI="
 postgresql-cygwin.patch
-cygwin-soversion.diff
-cygwin-makefiles.patch
-elog.patch
-skip_xacts.diff
-"
+cygwin-soversion.diff"
 
 DIFF_EXCLUDES="*.sql"
 RESTRICT="debuginfo"
@@ -54,8 +51,7 @@ libecpg_compat3_CATEGORY="Database Libs"
 libecpg_devel_SUMMARY="development files for ECPG (Embedded PostgreSQL for C)"
 libecpg_devel_CATEGORY="Database Libs Devel"
 
-# postgresql
-PKG_CONTENTS[0]=" \
+postgresql_CONTENTS=" \
 --exclude=usr/share/postgresql/contrib \
 --exclude=usr/share/postgresql/psqlrc.sample \
 etc \
@@ -70,11 +66,11 @@ usr/lib/postgresql/dict_snowball.dll \
 usr/lib/postgresql/euc2004_sjis2004.dll \
 usr/lib/postgresql/libpqwalreceiver.dll \
 usr/lib/postgresql/plpgsql.dll \
-usr/share/locale/*/LC_MESSAGES/initdb-9.3.mo \
-usr/share/locale/*/LC_MESSAGES/pg_controldata-9.3.mo \
-usr/share/locale/*/LC_MESSAGES/pg_ctl-9.3.mo \
-usr/share/locale/*/LC_MESSAGES/pg_resetxlog-9.3.mo \
-usr/share/locale/*/LC_MESSAGES/postgres-9.3.mo \
+usr/share/locale/*/LC_MESSAGES/initdb-9.4.mo \
+usr/share/locale/*/LC_MESSAGES/pg_controldata-9.4.mo \
+usr/share/locale/*/LC_MESSAGES/pg_ctl-9.4.mo \
+usr/share/locale/*/LC_MESSAGES/pg_resetxlog-9.4.mo \
+usr/share/locale/*/LC_MESSAGES/postgres-9.4.mo \
 usr/share/man/man1/initdb.1.gz \
 usr/share/man/man1/pg_controldata.1.gz \
 usr/share/man/man1/pg_ctl.1.gz \
@@ -84,8 +80,7 @@ usr/share/man/man1/postmaster.1.gz \
 usr/share/doc/Cygwin/${PN}.README \
 usr/share/postgresql"
 
-# postgresql-devel
-PKG_CONTENTS[1]=" \
+postgresql_devel_CONTENTS=" \
 --exclude=usr/include/ecpg*.h \
 --exclude=usr/include/postgresql/informix \
 --exclude=usr/include/pgtypes_*.h \
@@ -110,19 +105,18 @@ PKG_CONTENTS[1]=" \
 --exclude=usr/include/postgresql/server/postgres_ext.h \
 usr/include \
 usr/lib/postgresql/pgxs \
-"
-# usr/lib/libpostgres.a"
+usr/lib/libpostgres.a \
+usr/share/man/man3"
 
 # TODO: usr/lib/pkgconfig/
 
-# postgresql-client
-PKG_CONTENTS[2]=" \
---exclude=usr/share/locale/*/LC_MESSAGES/initdb-9.3.mo \
---exclude=usr/share/locale/*/LC_MESSAGES/pg_controldata-9.3.mo \
---exclude=usr/share/locale/*/LC_MESSAGES/pg_ctl-9.3.mo \
---exclude=usr/share/locale/*/LC_MESSAGES/pg_resetxlog-9.3.mo \
---exclude=usr/share/locale/*/LC_MESSAGES/postgres-9.3.mo \
---exclude=usr/share/locale/*/LC_MESSAGES/pg_config-9.3.mo \
+postgresql_client_CONTENTS=" \
+--exclude=usr/share/locale/*/LC_MESSAGES/initdb-9.4.mo \
+--exclude=usr/share/locale/*/LC_MESSAGES/pg_controldata-9.4.mo \
+--exclude=usr/share/locale/*/LC_MESSAGES/pg_ctl-9.4.mo \
+--exclude=usr/share/locale/*/LC_MESSAGES/pg_resetxlog-9.4.mo \
+--exclude=usr/share/locale/*/LC_MESSAGES/postgres-9.4.mo \
+--exclude=usr/share/locale/*/LC_MESSAGES/pg_config-9.4.mo \
 usr/bin/clusterdb.exe \
 usr/bin/createdb.exe \
 usr/bin/dropdb.exe \
@@ -131,6 +125,7 @@ usr/bin/pg_dumpall.exe \
 usr/bin/pg_basebackup.exe \
 usr/bin/pg_isready.exe \
 usr/bin/pg_receivexlog.exe \
+usr/bin/pg_recvlogical.exe \
 usr/bin/psql.exe \
 usr/bin/reindexdb.exe \
 usr/sbin/createlang.exe \
@@ -151,6 +146,7 @@ usr/share/man/man1/pg_dumpall.1.gz \
 usr/share/man/man1/pg_basebackup.1.gz \
 usr/share/man/man1/pg_isready.1.gz
 usr/share/man/man1/pg_receivexlog.1.gz \
+usr/share/man/man1/pg_recvlogical.1.gz \
 usr/share/man/man1/pg_restore.1.gz \
 usr/share/man/man1/psql.1.gz \
 usr/share/man/man1/reindexdb.1.gz \
@@ -160,8 +156,7 @@ usr/share/man/man7 \
 usr/share/postgresql/psqlrc.sample \
 usr/share/locale/*/LC_MESSAGES/"
 
-# postgresql-contrib
-PKG_CONTENTS[3]=" \
+postgresql_contrib_CONTENTS=" \
 --exclude=usr/lib/postgresql/*_and_*.dll \
 --exclude=usr/lib/postgresql/dict_snowball.dll \
 --exclude=usr/lib/postgresql/euc2004_sjis2004.dll \
@@ -180,22 +175,17 @@ usr/share/man/man1/pg_xlogdump.1.gz \
 usr/share/man/man1/pgbench.1.gz
 "
 
-# ${PN}-doc 
-PKG_CONTENTS[4]=" \
+postgresql_doc_CONTENTS=" \
 --exclude=usr/share/doc/${PN}/contrib \
 usr/share/doc/${PN}"
 
-# ${PN}-plperl 
-PKG_CONTENTS[5]="usr/lib/postgresql/plperl.dll"
+postgresql_plperl_CONTENTS="usr/lib/postgresql/plperl.dll"
 
-# ${PN}-plpython 
-PKG_CONTENTS[6]="usr/lib/postgresql/plpython2.dll"
+postgresql_plpython_CONTENTS="usr/lib/postgresql/plpython2.dll"
 
-# libpq5
-PKG_CONTENTS[7]="usr/bin/cygpq-5.dll"
+libpq5_CONTENTS="usr/bin/cygpq-5.dll"
 
-# libpq-devel  
-PKG_CONTENTS[8]=" \
+libpq_devel_CONTENTS=" \
 usr/bin/pg_config.exe \
 usr/include/libpq-fe.h \
 usr/include/libpq/libpq-fs.h \
@@ -219,22 +209,18 @@ usr/lib/libpq.a \
 usr/lib/libpgcommon.a \
 usr/lib/pkgconfig/libpq.pc \
 usr/share/man/man1/pg_config.1.gz \
-usr/share/locale/*/LC_MESSAGES/pg_config-9.3.mo"
+usr/share/locale/*/LC_MESSAGES/pg_config-9.4.mo"
 
-# libpgtypes3  
-PKG_CONTENTS[9]="usr/bin/cygpgtypes-3.dll"
+libpgtypes3_CONTENTS="usr/bin/cygpgtypes-3.dll"
 
-# libecpg6  
-PKG_CONTENTS[10]=" \
+libecpg6_CONTENTS=" \
 usr/bin/ecpg.exe \
 usr/bin/cygecpg-6.dll \
 usr/share/man/man1/ecpg.1.gz"
 
-# libecpg-compat3  
-PKG_CONTENTS[11]="usr/bin/cygecpg_compat-3.dll"
+libecpg_compat3_CONTENTS="usr/bin/cygecpg_compat-3.dll"
 
-# libecpg-devel
-PKG_CONTENTS[12]=" \
+libecpg_devel_CONTENTS=" \
 usr/include/ecpg*.h \
 usr/include/postgresql/informix \
 usr/include/pgtypes_*.h \
@@ -243,13 +229,12 @@ usr/include/sqlca.h \
 usr/lib/libecpg.a \
 usr/lib/libecpg_compat.a \
 usr/lib/libpgtypes.a \
-usr/lib/libpostgres.a \
 usr/lib/pkgconfig/libecpg.pc \
 usr/lib/pkgconfig/libecpg_compat.pc \
 usr/lib/pkgconfig/libpgtypes.pc" 
 
 # ${PN}-pltcl  
-#PKG_CONTENTS[13]="usr/lib/postgresql/pltcl.dll"
+# PKG_CONTENTS[13]="usr/lib/postgresql/pltcl.dll"
 
 src_compile() {
   cd ${B}
@@ -283,10 +268,12 @@ src_install() {
   cp ${C}/postgresql.initd ${D}/etc/rc.d/init.d/postgresql
   chmod +x ${D}/etc/rc.d/init.d/postgresql
 
-  cp -r ${S}/doc/src/FAQ ${D}/usr/share/doc/${PN}/
+  cp -r ${S}/doc/src/html ${D}/usr/share/doc/${PN}
 
   dodir /usr/share/man/man1
   cp ${S}/doc/src/sgml/man1/*.1  ${D}/usr/share/man/man1
+  dodir /usr/share/man/man3
+  cp ${S}/doc/src/sgml/man3/*.3  ${D}/usr/share/man/man3
   dodir /usr/share/man/man7
   cp ${S}/doc/src/sgml/man7/*.7  ${D}/usr/share/man/man7
 
